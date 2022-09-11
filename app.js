@@ -1,19 +1,29 @@
 const express = require('express')
-const cors = require('cors')
-const contactsRouter = require("./app/routes/contact.route");
+const authNhanVienRouter = require("./app/routes/authNhanVien.route");
+// const userRouter = require("./app/routes/user.route");
+// const productRouter = require("./app/routes/product.route");
+// const authRouter = require("./app/routes/auth.route");
 const ApiError = require("./app/api-error");
+const cors = require("cors");
+var cookieParser = require('cookie-parser')
+
 const app = express()
+app.use(cors({
+    origin: [
+        "http://localhost:3001",
+        "http://localhost:3000",
+      ],
+    credentials: true,
+    // exposedHeaders: ["set-cookie"],
+  }));
+app.use(cookieParser())
+app.use(express.json());
+app.use(express.static(__dirname+"/app/uploads"));
 
+app.use("/api", authNhanVienRouter);
+// app.use("/api", productRouter);
+// app.use("/api", authRouter);
 
-
-app.use(cors())
-app.use(express.json())
-
-app.get("/", (req, res) =>{
-    res.json({ message: "Welcome to contact book application."});
-});
-
-app.use("api/contacts", contactsRouter);
 
 // handle 404 response
 app.use((req, res, next) => {
@@ -29,6 +39,6 @@ app.use((err, req, res, next) => {
     return res.status(error.statusCode || 500).json({
     message: error.message || "Internal Server Error",
     });
-    });
+});
     
 module.exports = app;
