@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 
-const nhanvienSchema = new mongoose.Schema({
+const khachhangSchema = new mongoose.Schema({
     hoten: {
         type: String,
         
     },
     taikhoan: {
         type: String,
-        unipue: true,
+        required: true,
+        unique: true
     },
     matkhau: {
         type: String,
@@ -22,17 +23,14 @@ const nhanvienSchema = new mongoose.Schema({
     diachi: {
         type: String, 
     },
-    role: {
-        type: String, 
+    quyen: {
+        type: Number, 
+        default: 1
     },
-    maquyen: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Quyen'
-    }],
     createAt: {
         type: Date,
         default: Date.now
     },
 });
 
-module.exports = mongoose.model("Nhanvien", nhanvienSchema);
+module.exports = mongoose.model("Khachhang", khachhangSchema);

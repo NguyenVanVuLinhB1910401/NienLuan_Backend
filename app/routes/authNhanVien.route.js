@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authNhanVienController = require("../controllers/authNhanVien.controller");
@@ -21,5 +20,7 @@ const upload = multer({ storage: fileStorage});
 
 router.post("/nv/create", upload.single('image'), authNhanVienController.createNhanVien);
 router.post("/nv/login", authNhanVienController.login);
+router.post('/nv/logout', authNhanVienController.logout);
+router.get('/nv/user', authNhanVienController.getNhanVien);
 
-module.exports = router;
+module.exports = router; 
